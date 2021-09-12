@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  web_chat_pg_db:
+    image: postgres:13.0-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - web_chat_pg_db_volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=artists
+      - POSTGRES_USER=wizard
+      - POSTGRES_PASSWORD=123456
+
+
+volumes:
+  web_chat_pg_db_volume:
+    driver: local
+
