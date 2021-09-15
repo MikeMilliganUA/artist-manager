@@ -21,14 +21,11 @@ public class ArtistController {
         Artist artist = toArtist(postArtistDto);
         artistService.addArtist(artist);
     }
-    
-    //TODO: @UpdateMapping - поменять name и country
 
     @PutMapping(path = "/artists/{artistId}")
     public void updateArtist(@PathVariable Long artistId, @RequestBody PostArtistDto postArtistDto ) {
         artistService.updateArtist(artistId, postArtistDto);
     }
-
 
     @GetMapping(path = "/artists")
     public List<ArtistDto> findArtists() {

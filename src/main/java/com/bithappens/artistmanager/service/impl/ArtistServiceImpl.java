@@ -3,11 +3,11 @@ package com.bithappens.artistmanager.service.impl;
 import com.bithappens.artistmanager.dto.ArtistDto;
 import com.bithappens.artistmanager.dto.PostArtistDto;
 import com.bithappens.artistmanager.entity.Artist;
+import com.bithappens.artistmanager.exceptions.EntityNotFoundException;
 import com.bithappens.artistmanager.repository.ArtistRepository;
 import com.bithappens.artistmanager.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -37,11 +37,10 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     public void updateArtist(Long artistId, PostArtistDto postArtistDto) {
-            Artist artist = new Artist();
-            artist.setId(artistId);
-            artist.setName(postArtistDto.getName());
-            artist.setCountry(postArtistDto.getCountry());
-            artistRepository.save(artist);
+            if (!artistRepository.existsById(artistId)) {
+                throw new EntityNotFoundException();
+            }
+            artistRepository.updateArtist(artistId, postArtistDto.getName(), postArtistDto.getCountry());
     }
 
     private ArtistDto artistEntityToArtistDto(Artist artist) {
